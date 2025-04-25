@@ -94,3 +94,59 @@ CREATE TABLE size_category (
     category_id INT AUTO_INCREMENT PRIMARY KEY,
     category_name VARCHAR(50) NOT NULL
 );
+-- rest of the code --
+CREATE TABLE size_option (
+    size_id INT AUTO_INCREMENT PRIMARY KEY,
+    size_category_id INT,
+    size_label VARCHAR(20) NOT NULL,
+    FOREIGN KEY (size_category_id) REFERENCES size_category(size_category_id)
+);
+
+CREATE TABLE product_attribute (
+    attribute_id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT,
+    attribute_type_id INT,
+    value VARCHAR(255) NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES product(product_id),
+    FOREIGN KEY (attribute_type_id) REFERENCES attribute_type(attribute_type_id)
+);
+
+CREATE TABLE attribute_category (
+    attribute_category_id INT AUTO_INCREMENT PRIMARY KEY,
+    category_name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE attribute_type (
+    attribute_type_id INT AUTO_INCREMENT PRIMARY KEY,
+    category_id INT,
+    type_name VARCHAR(50) NOT NULL,
+    FOREIGN KEY (category_id) REFERENCES attribute_category(attribute_category_id)
+);
+
+-- Size Options
+INSERT INTO size_option (size_category_id, size_label) VALUES 
+(1, 'S'),
+(1, 'M'),
+(1, 'L'),
+(2, '42'),
+(2, '43');
+
+-- Attribute Categories
+INSERT INTO attribute_category (category_name) VALUES 
+('Physical'),
+('Technical');
+
+-- Attribute Types
+INSERT INTO attribute_type (category_id, type_name) VALUES 
+(1, 'Material'),
+(1, 'Weight'),
+(2, 'Battery Life'),
+(2, 'Processor');
+
+-- Product Attributes
+INSERT INTO product_attribute (product_id, attribute_type_id, value) VALUES 
+(1, 1, 'Cotton'),
+(1, 2, '200g'),
+(2, 3, '24 hours'),
+(2, 4, 'Quad-Core'),
+(3, 1, 'Steel');
