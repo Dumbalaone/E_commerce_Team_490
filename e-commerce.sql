@@ -1,3 +1,4 @@
+USE ecommerce;
 -- philip's code --
 -- Table to store product image information
 CREATE TABLE product_image (
@@ -60,3 +61,36 @@ INSERT INTO product_image (image_url, product_id) VALUES
 ('https://images.pexels.com/photos/4686822/pexels-photo-4686822.jpeg?auto=compress&cs=tinysrgb&w=600', 3),
 ('https://images.pexels.com/photos/207636/pexels-photo-207636.jpeg?auto=compress&cs=tinysrgb&w=600', 4),
 ('https://images.pexels.com/photos/7269674/pexels-photo-7269674.jpeg?auto=compress&cs=tinysrgb&w=600', 5);
+
+
+-- Cedrick's code --
+ CREATE TABLE product_item(
+	 item_id INT AUTO_INCREMENT PRIMARY KEY,
+	 product_id INT,
+	 color_id INT,
+	 size_option_id INT,
+	 variation_price DECIMAL(10, 2),
+	 quantity_available INT,
+	 FOREIGN KEY (product_id) REFERENCES product(product_id),
+	 FOREIGN KEY (color_id) REFERENCES color(color_id),
+	 FOREIGN KEY (size_option_id) REFERENCES size_option(option_id)
+ ); 
+ 
+ CREATE TABLE brand (
+    brand_id INT AUTO_INCREMENT PRIMARY KEY,
+    brand_name VARCHAR(100) NOT NULL,
+    brand_description TEXT
+);
+
+CREATE TABLE product_variation (
+    variation_id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT,
+    item_id INT,
+    FOREIGN KEY (product_id) REFERENCES product(product_id),
+    FOREIGN KEY (item_id) REFERENCES product_item(item_id)
+);
+
+CREATE TABLE size_category (
+    category_id INT AUTO_INCREMENT PRIMARY KEY,
+    category_name VARCHAR(50) NOT NULL
+);
